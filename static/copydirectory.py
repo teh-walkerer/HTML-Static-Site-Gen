@@ -5,10 +5,7 @@ import shutil
 # In this case, static to public
 # It deletes contents of the destination (public) to ensure the copy is clean
 # It logs the path of each file copies
-print(os.listdir())
-print(os.listdir("/home/munch/Projects/github.com/teh-walkerer/HTML-Static-Site-Gen/src"))
-for file in os.listdir("/home/munch/Projects/github.com/teh-walkerer/HTML-Static-Site-Gen/src"):
-    print(os.path.isfile(f"/home/munch/Projects/github.com/teh-walkerer/HTML-Static-Site-Gen/src/{file}"))
+
 def recursive_copy(source_dir, destination_dir):
 
     # With shutil.rmtree, delete content of the destination directory, if it exists. 
