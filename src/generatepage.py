@@ -1,9 +1,8 @@
 from blockmarkdown import markdown_to_html_node, extract_title
 import os
 
-def generate_page(from_path, template_path, dest_path)
+def generate_page(from_path, template_path, dest_path):
     print(f"Generating page from {from_path} to {dest_path} using {template_path}")
-    
     with open(from_path) as markdown_file:
         markdown_data = markdown_file.read()
         file_content = markdown_to_html_node(markdown_data).to_html()
