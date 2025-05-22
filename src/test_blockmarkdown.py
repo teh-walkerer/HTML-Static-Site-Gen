@@ -1,5 +1,7 @@
 import unittest
-from blockmarkdown import markdown_to_blocks, markdown_to_html_node
+from blockmarkdown import markdown_to_blocks, markdown_to_html_node, extract_title
+
+
 
 
 class TestMarkdownToHTML(unittest.TestCase):
@@ -77,6 +79,50 @@ This is the same paragraph on a new line
             html,
             "<div><pre><code>This is text that _should_ remain\nthe **same** even with inline stuff\n</code></pre></div>",
         )
+
+    def test_extract_title_h1(self):
+            md = """
+    # My Awesome Title
+
+    Some content here.
+    """
+            self.assertEqual(extract_title(md), "My Awesome Title")
+
+    def test_extract_title_h1_with_leading_spaces(self):
+            md = """
+       #    Another Title
+
+    Paragraph.
+    """
+            self.assertEqual(extract_title(md), "Another Title")
+
+    def test_extract_title_h1_not_first_line(self):
+            md = """
+    Some intro text.
+
+    # The Real Title
+
+    More text.
+    """
+            self.assertEqual(extract_title(md), "The Real Title")
+
+    def test_extract_title_no_h1_raises(self):
+            md = """
+    ## Not a main title
+
+    Some content.
+    """
+            with self.assertRaises(Exception) as context:
+                extract_title(md)
+            self.assertIn("No header found", str(context.exception))
+
+    def test_extract_title_h1_with_markdown_inline(self):
+            md = """
+    # Title with **bold** and _italic_
+
+    Body.
+    """
+            self.assertEqual(extract_title(md), "Title with **bold** and _italic_")
 
 if __name__ == "__main__":
     unittest.main()

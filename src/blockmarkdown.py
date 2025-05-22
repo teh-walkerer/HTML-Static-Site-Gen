@@ -166,4 +166,12 @@ def markdown_to_html_node(markdown):
         parent_node.children.append(block_node)
     return parent_node
 
-  
+def extract_title(markdown):
+#Pull the h1 header from the markdown file and return it
+# If there is no h1 header, raise exception
+    split_markdown = markdown.split("\n")
+    for line in split_markdown:
+        if line.strip().startswith("# "):
+            return line.replace("#", "").strip()
+    raise Exception("No header found")    
+
