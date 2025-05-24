@@ -8,10 +8,13 @@ template = "template.html"
 content = "content/"
 html_file_to_generate = "docs/"
 def main():
-    if len(sys.argv) > 1:
-        basepath = sys.argv[1]
-    else:
+    user_input = sys.argv[1].strip()
+    if user_input == "":
+        raise Exception("basepath cannot be empty or whitespace")
+    if user_input == "/":
         basepath = "/"
+    else:
+        basepath = user_input.rstrip("/") + "/"
     recursive_copy(source_dir, destination_dir)
     generate_pages_recursive(content, template, html_file_to_generate, basepath)
 

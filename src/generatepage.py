@@ -9,15 +9,15 @@ def generate_page(from_path, template_path, dest_path, basepath):
         file_content = markdown_to_html_node(markdown_data).to_html()
         file_title = extract_title(markdown_data)
     with open(template_path) as template_file:
-        template_data = template_file.read()
-        template_data = template_data.replace("{{ Title }}", file_title).replace('href="/', f'href="{basepath}')
-        template_data = template_data.replace("{{ Content }}", file_content).replace('src="/', f'src="{basepath}')
+        read_template_data = template_file.read()
+        replaced_title_and_content_data = read_template_data.replace("{{ Title }}", file_title).replace("{{ Content }}", file_content)
+        replaced_basepath_data = replaced_title_and_content_data.replace('href="/', f'href="{basepath}').replace('src="/', f'src="{basepath}')
     # Create the directory if it doesn't exist        
     os.makedirs(os.path.dirname(dest_path), exist_ok=True)
 
     # Write the modified template to the destination file
     with open(dest_path, "w") as dest_file:
-        dest_file.write(template_data)
+        dest_file.write(replaced_basepath_data)
 
 def generate_pages_recursive(dir_path_content, template_path, dest_dir_path, basepath):
     # Crawl through every directory
